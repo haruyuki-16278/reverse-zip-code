@@ -5,14 +5,11 @@ import { BufReader } from "https://deno.land/std/io/buffer.ts";
 
 const zipCodeAddressListFile = await Deno.readTextFile(new URL("./18FUKUI.CSV", import.meta.url));
 const zipCodeAddressList = await parse(zipCodeAddressListFile);
-console.log(zipCodeAddressList[5]);
 
 serve(async (req) => {
   const { pathname, searchParams } = new URL(req.url);
-  console.log('requested', pathname);
 
   const address = searchParams.get('address');
-  console.log(address);
   if (!address) return new Response('invalid address');
 
   const pref = address.split('県')[0] + '県';
