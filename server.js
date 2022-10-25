@@ -22,7 +22,7 @@ serve(async (req) => {
     if (zipCodeAddress[6] === pref &&
         (zipCodeAddress[7] === city || zipCodeAddress[7] === town) &&
         (zipCodeAddress[8] === town || zipCodeAddress[8] === sov || zipCodeAddress[8] === town + sov )) {
-      return new Response(zipCodeAddress[2]);
+      return new Response(zipCodeAddress[2].slice(0,3) + '-' + zipCodeAddress[2].slice(3));
     }
   }
 
