@@ -1,17 +1,11 @@
-import { serve } from "https://deno.land/std@0.138.0/http/server.ts";
-import { serveDir } from "https://deno.land/std@0.138.0/http/file_server.ts";
-import { parse } from "https://deno.land/std@0.79.0/encoding/csv.ts";
-import { BufReader } from "https://deno.land/std@0.79.0/io/bufio.ts";
+import { serve } from "https://deno.land/std/http/server.ts";
+import { serveDir } from "https://deno.land/std/http/file_server.ts";
+import { parse } from "https://deno.land/std/encoding/csv.ts";
+import { BufReader } from "https://deno.land/std/io/buffer.ts";
 
-const zipCodeAddressListFile = await Deno.open('18FUKUI.CSV');
-let zipCodeAddressList;
-try {
-  const buf = BufReader.create(zipCodeAddressListFile);
-  zipCodeAddressList = await parse(buf);
-  console.log(zipCodeAddressList[5])
-} catch {
-  file.close()
-}
+const zipCodeAddressListFile = await Deno.readTextFile(new URL("./18FUKUI.CSV", import.meta.url));
+const zipCodeAddressList = await parse(zipCodeAddressListFile);
+console.log(zipCodeAddressList[5]);
 
 serve(async (req) => {
   const { pathname, searchParams } = new URL(req.url);
